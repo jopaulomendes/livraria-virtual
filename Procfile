@@ -1,0 +1,1 @@
+web: java -cp target/classes:target/dependency/* br.com.jopaulo.rest.livraria.heroku.Main

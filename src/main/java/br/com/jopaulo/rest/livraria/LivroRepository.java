@@ -10,9 +10,9 @@ public class LivroRepository {
 	private Map<Long, Livro> livros = new HashMap<>();
 	
 	public LivroRepository() {
-		Livro livro1 = new Livro(1L, "O Segredo da Chave Mestre", "ISBN-1234", "Gênero: auto-ajuda", 4.95, "Autor: Desconhecido");
-		Livro livro2 = new Livro(1L, "O Segredo", "ISBN-4321", "Gênero: auto-ajuda", 35.9, "Autor: Desconhecido");
-		Livro livro3 = new Livro(1L, "O Segredo da Vida Eterna", "ISBN-1212", "Gênero: auto-ajuda", 10.5, "Autor: Desconhecido");
+		Livro livro1 = new Livro(1L, "O Segredo da Chave Mestre", "ISBN-1234", "Gênero: auto-ajuda", 4.95, "Autor: Charles F. Haanel");
+		Livro livro2 = new Livro(2L, "O Inferno de Dante", "ISBN-4321", "Gênero: Ficção", 35.9, "Autor: Dante Alighieri e José Pedro Xavier Pinheiro");
+		Livro livro3 = new Livro(3L, "O Senhor dos Aneis", "ISBN-1212", "Gênero: Fantasia", 10.5, "Autor: J.R.R. Tolkien ");
 		
 		livros.put(livro1.getId(), livro1);
 		livros.put(livro2.getId(), livro2);
@@ -21,5 +21,14 @@ public class LivroRepository {
 	
 	public List<Livro> getLivros() {
 		return new ArrayList<>(livros.values());
+	}
+
+	public Livro getLivroIsbn(String isbn) {
+		for (Livro livro : livros.values()) {
+			if (isbn.equals(livro.getIsbn())) {
+				return livro;
+			}
+		}
+		throw new LivroNaoEncontradoException();
 	}
 }

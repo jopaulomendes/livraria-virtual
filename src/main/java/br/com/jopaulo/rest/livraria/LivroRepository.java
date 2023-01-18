@@ -9,7 +9,16 @@ public class LivroRepository {
 
 	private Map<Long, Livro> livros = new HashMap<>();
 	
-	public LivroRepository() {
+	private static LivroRepository repository;
+
+	public static LivroRepository getInstance(){
+		if (repository == null) {
+			repository = new LivroRepository();
+		}
+		return repository;
+	}
+	
+	private LivroRepository() {
 		Livro livro1 = new Livro(1L, "O Segredo da Chave Mestre", "ISBN-1234", "Gênero: auto-ajuda", 4.95, "Autor: Charles F. Haanel");
 		Livro livro2 = new Livro(2L, "O Inferno de Dante", "ISBN-4321", "Gênero: Ficção", 35.9, "Autor: Dante Alighieri e José Pedro Xavier Pinheiro");
 		Livro livro3 = new Livro(3L, "O Senhor dos Aneis", "ISBN-1212", "Gênero: Fantasia", 10.5, "Autor: J.R.R. Tolkien ");
@@ -38,4 +47,19 @@ public class LivroRepository {
 		}
 		livros.put(livro.getId(), livro);
 	}
+	
+	public void atualizar(Livro livro) {
+		livros.put(livro.getId(), livro);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+

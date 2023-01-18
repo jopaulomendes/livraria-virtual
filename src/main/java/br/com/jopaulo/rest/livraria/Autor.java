@@ -18,7 +18,7 @@ public class Autor {
 	public Autor() {}
 	
 	public Autor(String nome) {
-		this.id = Math.round(Math.random() * 10);
+		this.id = Math.round(Math.random() * 100);
 		this.nome = nome;
 	}
 	public Long getId() {

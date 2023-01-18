@@ -3,6 +3,7 @@ package br.com.jopaulo.rest.livraria;
 import java.net.URI;
 
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -74,4 +75,23 @@ public class LivroReseource {
 		
 		return Response.ok().entity(livro).build();
 	}
+	
+	@DELETE
+	@Path("/{id}")
+	public void removeLivro(@PathParam("id") Long id) {
+		try {
+			repository.remover(id);
+		} catch (LivroNaoEncontradoException e) {
+			e.printStackTrace();
+			throw new WebApplicationException(Status.NOT_FOUND);
+		}
+	}
 }
+
+
+
+
+
+
+
+

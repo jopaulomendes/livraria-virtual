@@ -51,6 +51,13 @@ public class LivroRepository {
 	public void atualizar(Livro livro) {
 		livros.put(livro.getId(), livro);
 	}
+	
+	public void remover(Long id) {
+		if (livros.containsKey(id)) {
+			livros.remove(id);
+		}
+		throw new LivroNaoEncontradoException();
+	}
 }
 
 

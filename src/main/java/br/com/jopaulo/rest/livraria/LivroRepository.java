@@ -33,6 +33,9 @@ public class LivroRepository {
 	}
 	
 	public void addLivro(Livro livro) {
+		if (livros.containsKey(livro.getId())) {
+			throw new LivroExistenteException();
+		}
 		livros.put(livro.getId(), livro);
 	}
 }

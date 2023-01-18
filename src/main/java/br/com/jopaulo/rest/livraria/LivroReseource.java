@@ -33,14 +33,20 @@ public class LivroReseource {
 		try {
 			return repository.getLivroIsbn(isbn);
 		} catch (LivroNaoEncontradoException e) {
-			throw new WebApplicationException(Status.NOT_FOUND);
+			e.printStackTrace();
+			throw new WebApplicationException(Status.NOT_FOUND); // 404
 		}
 	}
 	
 	@POST
 	@Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 	public Response addLivro(Livro livro) {
-		repository.addLivro(livro);
+		try {
+			repository.addLivro(livro);
+		} catch (LivroExistenteException e) {
+			e.printStackTrace();
+			throw new WebApplicationException(Status.CONFLICT); // 409
+		}
 		
 		URI uri = UriBuilder.fromPath("livro/{isbn}").build(livro.getIsbn());
 		

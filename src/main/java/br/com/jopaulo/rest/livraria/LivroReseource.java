@@ -11,6 +11,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Link;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -31,9 +32,21 @@ public class LivroReseource {
 	
 	@GET
 	@Path("/{isbn}")
-	public Livro getLivroIsbn(@PathParam("isbn") String isbn) {
+	public ItemBusca getLivroIsbn(@PathParam("isbn") String isbn) {
 		try {
-			return repository.getLivroIsbn(isbn);
+			Livro livro = repository.getLivroIsbn(isbn);
+			
+			ItemBusca busca = new ItemBusca();
+			busca.setLivro(livro);
+			
+			Link link = Link.fromUri("/carrinho/" + livro.getId())
+					.rel("carrinho")
+					.type("POST")
+					.build();
+			
+			busca.addLink(link);
+			
+			return busca;
 		} catch (LivroNaoEncontradoException e) {
 			e.printStackTrace();
 			throw new WebApplicationException(Status.NOT_FOUND); // 404

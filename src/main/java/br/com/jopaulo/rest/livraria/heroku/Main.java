@@ -1,6 +1,13 @@
 package br.com.jopaulo.rest.livraria.heroku;
 
+import java.io.File;
+
+import org.eclipse.jetty.http.HttpVersion;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
@@ -10,8 +17,32 @@ import org.eclipse.jetty.webapp.WebAppContext;
 public class Main {
 
     public static void main(String[] args) throws Exception{
-        // The port that we should run on can be set into an environment variable
-        // Look for that variable and default to 8080 if it isn't there.
+//    	File fileKeystore = new File("server.keytore");
+//    	
+//    	final Server server = new Server();
+//    	
+//    	HttpConfiguration httpConfiguration = new HttpConfiguration();
+//    	httpConfiguration.setSecureScheme("https");
+//    	httpConfiguration.setSecurePort(8443);
+//    	
+//    	ServerConnector http = new ServerConnector(server, new HttpConnectionFactory(httpConfiguration));
+//    	http.setPort(8080);
+//    	
+//    	SslContextFactory contextFactory = new SslContextFactory() {};
+//    	contextFactory.setKeyStorePath(fileKeystore.getAbsolutePath());
+//    	contextFactory.setKeyStorePassword("senha");
+//    	contextFactory.setKeyManagerPassword("senha");
+//    	
+//    	HttpConfiguration httpsConfiguration = new HttpConfiguration(httpConfiguration);
+//    	
+//    	ServerConnector https = new ServerConnector(server, 
+//    			new SslContextFactory(contextFactory, 
+//    					HttpVersion.HTTP_1_1.asString()), 
+//    			new HttpConnectionFactory(httpsConfiguration));
+//    	https.setPort(8443);
+//    	
+//    	server.setConnectors(new ServerConnector[] {http, https});
+    	
         String webPort = System.getenv("PORT");
         if (webPort == null || webPort.isEmpty()) {
             webPort = "8080";
@@ -21,11 +52,6 @@ public class Main {
         final WebAppContext root = new WebAppContext();
 
         root.setContextPath("/livraria-virtual");
-        // Parent loader priority is a class loader setting that Jetty accepts.
-        // By default Jetty will behave like most web containers in that it will
-        // allow your application to replace non-server libraries that are part of the
-        // container. Setting parent loader priority to true changes this behavior.
-        // Read more here: http://wiki.eclipse.org/Jetty/Reference/Jetty_Classloading
         root.setParentLoaderPriority(true);
 
         final String webappDirLocation = "src/main/webapp/";
